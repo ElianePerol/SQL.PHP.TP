@@ -1,32 +1,47 @@
-# TP
+# Gestion d'Abonnement Newsletter - TP PHP & SQL (Procédural)
 
-## Partie 1
+## Contexte du Projet
+Réalisé dans le cadre de mon **BTS SIO SLAM**, ce projet consiste à développer un système d'abonnement à une newsletter en utilisant **PHP** et **SQL** dans un style **procédural**. 
+Le système permet aux utilisateurs de s'inscrire à une newsletter, de consulter la liste des abonnés protégée par mot de passe, et d'implémenter des fonctionnalités supplémentaires telles que la copie des adresses e-mail et la désinscription.
 
-Faire un formulaire d'inscription à une newsletter. On doit retrouver : 
+## Objectifs
+Le système développé permet :
+- La gestion des inscriptions à une newsletter via un formulaire HTML.
+- La consultation de la liste des abonnés dans une page d'administration protégée par mot de passe.
+- L'implémentation d'une fonctionnalité pour copier les adresses e-mail.
+- La possibilité de désactiver les abonnements via une mise à jour dans la base de données.
+- La possibilité de se désinscrire de la newsletter via un formulaire.
+- Une organisation procédurale du code PHP, avec l'utilisation de fonctions et d'un accès à la base de données via **PDO**.
 
-- 1 page permettant de s'inscrire (mail obligatoire + nom (optionnel) + prenom (optionnel))
-- 1 page permettant d'afficher la totalité des inscrits. Cette page ne doit afficher le contenu QUE avec un système de protection par mot de passe (géré en GET via l'URL)
+## Structure du Projet
 
+### Partie 1 : Inscription et Affichage des Inscrits
 
-### Étapes
+1. **Page d'Inscription (index.php)** :
+   - Formulaire permettant de saisir un e-mail (obligatoire), et un nom et prénom (optionnels).
+   - Les données sont envoyées et traitées par PHP et enregistrées dans la base de données à l'aide de PDO.
 
-1. Créer la page "index.php" avec le formulaire de récupération des emails
-2. Créez votre BDD pour le projet
-3. Gérez sur la même page la connexion avec votre BDD
-4. Gérez la récupération des informations depuis le formulaire
-5. Enregistrez les infos en BDD avec PDO
-6. Créez la page "admin.php" qui doit afficher toutes les adresses mail. Intégrez un formulaire pour saisir le MDP
-7. Intégrez la condition qui permet de n'afficher les résultats QUE si le MDP choisi est bon ($_GET)
-8. Gérez la connexion BDD sur la page admin.php
-9. Récupérez les contenus depuis la BDD sur les inscrits à la newsletter
-10. Afficher les résultats dans un tableau
+2. **Base de données** :
+   - Une base de données MySQL est utilisée pour stocker les informations des abonnés.
+   - Une table `abonnés` contient les champs suivants : `id`, `email`, `nom`, `prenom`, `status`.
 
+3. **Page d'Administration (admin.php)** :
+   - Cette page permet d'afficher la liste des abonnés sous forme de tableau.
+   - L'accès à cette page est protégé par un mot de passe passé en **GET** dans l'URL.
+   - La page interroge la base de données et récupère les informations des inscrits seulement si le mot de passe est correct.
 
-## Partie 2
-1. Ajouter un bouton en JS qui permette de copier dans le presse papier toutes les adresses mail de la forme : "addr1 addr2 addr3 etc..." (un espace entre chaque adresse mail).
-2. Pouvoir "désactiver" les adresses mails à partir de la BDD. Les adresses désactivées ne sont pas copier dans le presse papier à partir du bouton 1. Pour la partie copier/colle, vous pouvez vous servir des "data-attributes" du HTML, avec notamment la propriété "dataset".
+### Partie 2 : Fonctionnalités Avancées
 
+1. **Copie des adresses e-mail (JavaScript)** :
+   - Un bouton permet de copier toutes les adresses e-mail des abonnés sous la forme : `"addr1 addr2 addr3 ..."`.
+   - Les adresses e-mail sont récupérées via les **data-attributes** du HTML et traitées en JavaScript.
 
-## Partie 3
-1. Permettre aux gens de se désinscrire en créant une page "unsubscribe.php". Mettre un formulaire leur permettant de saisir l'adresse mail pour laquelle ils doivent se désinscrire.
-2. Refactorez votre code. Regrouper l'ensemble des informations de connexion à la base de données dans un seul fichier. Extrayez le traitement des informations dans des fichiers PHP spécifiques.
+2. **Désactivation des adresses e-mail** :
+   - Les utilisateurs peuvent désactiver leurs abonnements via la mise à jour du champ `status` dans la base de données.
+   - Les adresses e-mail désactivées ne seront pas copiées dans le presse-papier.
+
+### Partie 3 : Désinscription et Refactorisation
+
+1. **Désinscription des abonnés (unsubscribe.php)** :
+   - Une page permet à l'utilisateur de saisir son adresse e-mail pour se désinscrire de la newsletter.
+   - L'utilisateur passe en status "désactivé" dans la base de donnée.
